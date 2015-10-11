@@ -24,9 +24,9 @@ import NTU.DIP as dip
 #plt.show()
 
 
-ScaleRate = 0.8
+ScaleRate = float(3.7)
 
-img = cv2.imread('lena.bmp',cv2.IMREAD_ANYCOLOR)
+img = cv2.imread('lena-org.png',cv2.IMREAD_ANYCOLOR)
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
 
@@ -35,26 +35,19 @@ imgRow     = img.shape[0]
 imgColumn  = img.shape[1]
 #print `row`, `column`
 
-maxScaleRow = int(imgRow    * ScaleRate)
-maxScaleCol = int(imgColumn * ScaleRate)
+maxScaleRow = int(imgRow    * ScaleRate )
+maxScaleCol = int(imgColumn * ScaleRate )
 #print `maxScaleRow`, `maxScaleCol`
 
-scaleImg = np.zeros((maxScaleRow,maxScaleCol), dtype=float)
-#scaleImg = np.ndarray(shape = (maxScaleRow, maxScaleCol), dtype = float, order = 'F')
-#for i in range(maxScaleRow):
-#    for j in range(maxScaleCol):
-#        scaleImg[i][j] = 0
+scaleImg = np.zeros((maxScaleRow,maxScaleCol))
 
+#print dip.blinear(img,0.5,0.8)
 
 for i in range(maxScaleRow):
     for j in range(maxScaleCol):        
-        ii = float(i)/ScaleRate
-        jj = float(j)/ScaleRate
-#        print `ii`,",",`jj` ,"|",
-#        if imgRow-1 == int(ii) and imgColumn-1 == int(jj):            
-            
+        ii = i/ScaleRate
+        jj = j/ScaleRate
         scaleImg[i][j] = dip.blinear(img,ii,jj)
-#    print "\n\n"
     
 
      
