@@ -26,7 +26,7 @@ import math
 
 
 ScaleRate     = 2.0
-theta         = 45.0
+theta         = 30.0
 
 img = cv2.imread('lena.png',cv2.IMREAD_ANYCOLOR)
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
@@ -68,31 +68,24 @@ width =  height
 tmp = int(width/2)
 RotateImg = np.zeros((height, width))
 theta = (theta/180.0) * np.pi
-rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+rotMatrix = np.array([[np.cos(theta), np.sin(theta)], [-1*np.sin(theta), np.cos(theta)]])
 print rotMatrix
 
-for y in range(height):
-    for x in range(width):   
+for y in range(imgRow):
+    for x in range(imgColumn):   
         targetx = (x - x0) 
         targety = (y - y0)
         orgxy = np.array([targetx,targety],dtype=float)
-        target = orgxy * rotMatrix
-#        print target
-#        nx = int(target[1]+0.5)+tmp
-#        ny = int(target[0]+0.5)+tmp
-        nx = int(target[0][0]+0.5)+tmp
-        ny = int(target[0][1]+0.5)+tmp
-#        print `nx`+","+`ny`,
-        RotateImg[nx][ny] = 0 # img[i][j]
-    
-#    print "\n"
+        target = np.dot(rotMatrix, orgxy)
+        nx = int(target[0]+0.5)+tmp
+        ny = int(target[1]+0.5)+tmp
+        RotateImg[ny][nx] = img[y][x]
 
 
 
 
 
-
-
+cv2.imwrite("biCubic.png", RotateImg);
 plt.subplot(222)   
 plt.imshow(RotateImg, cmap = 'gray')
 plt.title('RotateImg')
