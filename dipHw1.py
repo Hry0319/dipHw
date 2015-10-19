@@ -10,6 +10,7 @@ from matplotlib import pyplot as plt
 from pylab import *
 import random
 import NTU.DIP as dip
+import math
 #import scipy
 
 #img = cv2.imread ("lena.bmp",1)
@@ -24,51 +25,74 @@ import NTU.DIP as dip
 #plt.show()
 
 
-ScaleRate = float(3.7)
+ScaleRate     = 2.0
+theta         = 45.0
 
-img = cv2.imread('lena-org.png',cv2.IMREAD_ANYCOLOR)
+img = cv2.imread('lena.png',cv2.IMREAD_ANYCOLOR)
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
 
 
-imgRow     = img.shape[0] 
+imgRow     = img.shape[0]
 imgColumn  = img.shape[1]
 #print `row`, `column`
 
-maxScaleRow = int(imgRow    * ScaleRate )
-maxScaleCol = int(imgColumn * ScaleRate )
+maxScaleRow = int(imgRow    * ScaleRate +0.5)
+maxScaleCol = int(imgColumn * ScaleRate +0.5)
 #print `maxScaleRow`, `maxScaleCol`
 
-scaleImg = np.zeros((maxScaleRow,maxScaleCol))
-
-#print dip.blinear(img,0.5,0.8)
+scaleImg = np.zeros((maxScaleRow, maxScaleCol))
 
 for i in range(maxScaleRow):
     for j in range(maxScaleCol):        
-        ii = i/ScaleRate
-        jj = j/ScaleRate
-        scaleImg[i][j] = dip.blinear(img,ii,jj)
-    
+        ii = (i/ScaleRate)-0.5
+        jj = (j/ScaleRate)-0.5
+#        print "%3.2f ,%3.2f |" % (ii,jj),
+        scaleImg[i][j] += dip.blinear(img,ii,jj)
+#    print "\n______________________________________________\n"
 
      
-#plt.subplot(111)   
-#plt.imshow(scaleImg, cmap = 'gray')
-#plt.title('scaleImg')
-cv2.imwrite("blinearScale.png", scaleImg);
-
-
-img = cv2.resize(img, (maxScaleCol, maxScaleRow))  #default bilinear interpolation
-cv2.imwrite("cv2.png", img)
-
-
-
+plt.subplot(221)   
+plt.imshow(scaleImg, cmap = 'gray')
+plt.title('scaleImg')
+#cv2.imwrite("blinearScale.png", scaleImg);
+#img = cv2.resize(img, (maxScaleCol, maxScaleRow))  #default bilinear interpolation
+#cv2.imwrite("cv2.png", img)
 
 
 
 x0 = img.shape[1]/2
 y0 = img.shape[0]/2
+height = int(math.sqrt(img.shape[0]**2 + img.shape[1]**2) +0.5)
+width =  height 
+tmp = int(width/2)
+RotateImg = np.zeros((height, width))
+theta = (theta/180.0) * np.pi
+rotMatrix = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+print rotMatrix
 
-maxRotateRow = math.sqrt(img.shape[0]**2 + img.shape[1]**2)
-maxRotateCol = maxRotateRow  
+for y in range(height):
+    for x in range(width):   
+        targetx = (x - x0) 
+        targety = (y - y0)
+        orgxy = np.array([targetx,targety],dtype=float)
+        target = orgxy * rotMatrix
+#        print target
+#        nx = int(target[1]+0.5)+tmp
+#        ny = int(target[0]+0.5)+tmp
+        nx = int(target[0][0]+0.5)+tmp
+        ny = int(target[0][1]+0.5)+tmp
+#        print `nx`+","+`ny`,
+        RotateImg[nx][ny] = 0 # img[i][j]
+    
+#    print "\n"
 
 
+
+
+
+
+
+plt.subplot(222)   
+plt.imshow(RotateImg, cmap = 'gray')
+plt.title('RotateImg')
