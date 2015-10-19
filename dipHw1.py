@@ -75,11 +75,11 @@ for y in range(imgRow):
     for x in range(imgColumn):   
         targetx = (x - x0) 
         targety = (y - y0)
-        orgxy = np.array([targetx,targety],dtype=float)
-        target = np.dot(rotMatrix, orgxy)
-        nx = int(target[0]+0.5)+tmp
-        ny = int(target[1]+0.5)+tmp
-        RotateImg[ny][nx] = img[y][x]
+        mat_orgxy = np.array([targetx,targety],dtype=float)
+        mat_target = np.dot(rotMatrix, mat_orgxy)
+        nx = int(mat_target[0]+0.5)+tmp
+        ny = int(mat_target[1]+0.5)+tmp
+        RotateImg[ny][nx] = dip.blinear(img,y,x)
 
 
 
