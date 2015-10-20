@@ -1,9 +1,11 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """
-Created on Sat Oct 10 16:02:03 2015
+Created on Tue Oct 20 18:30:24 2015
 
-@author: k3331863
+@author: Patrick
 """
+
+
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
@@ -24,11 +26,10 @@ import math
 ##plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
 #plt.show()
 
-
-ScaleRate     = 2.0
+ScaleRate     = 1.3
 theta         = 30.0
 
-img = cv2.imread('lena.png',cv2.IMREAD_ANYCOLOR)
+img = cv2.imread('lena.bmp',cv2.IMREAD_ANYCOLOR)
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
 
@@ -63,11 +64,14 @@ plt.title('scaleImg')
 
 x0 = img.shape[1]/2
 y0 = img.shape[0]/2
-height = int(math.sqrt(img.shape[0]**2 + img.shape[1]**2) +0.5)
-width =  height 
+theta = (theta/180.0) * np.pi
+#height = int(math.sqrt(img.shape[0]**2 + img.shape[1]**2) +0.5)
+#width =  height 
+height = int(img.shape[1]*np.sin(theta) + img.shape[0]*np.cos(theta) + 0.5)
+width  = int(img.shape[1]*np.cos(theta) + img.shape[0]*np.sin(theta) + 0.5)
+print `height`, `width`
 tmp = int(width/2)
 RotateImg = np.zeros((height, width))
-theta = (theta/180.0) * np.pi
 rotMatrix = np.array([[np.cos(theta), np.sin(theta)], [-1*np.sin(theta), np.cos(theta)]])
 print rotMatrix
 
@@ -77,8 +81,9 @@ for y in range(imgRow):
         targety = (y - y0)
         mat_orgxy = np.array([targetx,targety],dtype=float)
         mat_target = np.dot(rotMatrix, mat_orgxy)
-        nx = int(mat_target[0]+0.5)+tmp
-        ny = int(mat_target[1]+0.5)+tmp
+        nx = mat_target[0]+tmp
+        ny = mat_target[1]+tmp
+#        print `nx`, `ny`
         RotateImg[ny][nx] = dip.blinear(img,y,x)
 
 
