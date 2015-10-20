@@ -5,7 +5,11 @@ def cubic ():
 #print data*test0
     return
 
-
+def rotateImage(image, angle):
+    image_center = tuple(np.array(image.shape)/2)
+    rot_mat = cv2.getRotationMatrix2D(image_center,angle,1.0)
+    result = cv2.warpAffine(image, rot_mat, image.shape,flags=cv2.INTER_CUBIC)
+    return result
 
 def blinear (img, ii, jj):    
     """
