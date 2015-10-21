@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*-
-def cubic ():
-#test0 = np.matrix([[4, 2], [3, 1]])
-#data  = np.matrix([9,8])
-#print data*test0
+def BiCubic(img,y,x):
+    
     return
 
+<<<<<<< HEAD
+def Cubic(p0,p1,p2,p3,x):
+    ff1 = (p3-p1)/2
+    f1  = p2
+    ff0 = (p2-p0)/2
+    f0  = p1
+    c = ff0
+    d = f0
+    a = ff1-2*f1+c+2*d
+    b = f1-a-c-d
+        
+    return a*x**3 + b*x**2 + c*x + d
+=======
 def rotateImage(image, angle):
     image_center = tuple(np.array(image.shape)/2)
     rot_mat = cv2.getRotationMatrix2D(image_center,angle,1.0)
     result = cv2.warpAffine(image, rot_mat, image.shape,flags=cv2.INTER_CUBIC)
     return result
+>>>>>>> 7b6003f85d784ec9e686938da6bbf42aafce9051
 
 def blinear (img, ii, jj):    
     """
