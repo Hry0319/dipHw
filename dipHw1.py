@@ -52,7 +52,7 @@ print `height`, `width`
 RotateImg = np.zeros((height, width))
 x0 = int(width/2+0.5)
 y0 = int(height/2+0.5)
-RotMatrix = np.array([[np.cos(theta), np.sin(theta)], [-1*np.sin(theta), np.cos(theta)]])
+RotMatrix = np.array([[np.cos(theta), -1*np.sin(theta)], [np.sin(theta), np.cos(theta)]])
 inv_RotMatrix = np.linalg.inv(RotMatrix)
 #print inv_rotMatrix
 
@@ -64,14 +64,8 @@ for y in range(height):
         orgPoint[1] += float(imgRow/2)
         if ((orgPoint[0] >= 0) and (orgPoint[0] < imgColumn)) and ((orgPoint[1] >= 0) and (orgPoint[1] < imgRow)):   
             RotateImg[y][x] = dip.BiCubic(img ,orgPoint[1],orgPoint[0])
-        
-        
-        
-        
-
-#cv2.imwrite("cv2.png", rotateImage(img,30))    
-    
-
+            
+            
 
 
 cv2.imwrite("biCubic.png", RotateImg);
