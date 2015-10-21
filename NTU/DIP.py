@@ -10,53 +10,55 @@ def BiCubic(img,y,x):
     alpha = x - x0
     beta  = y - y0
     
-    mm = np.zeros((4, 4))  
+    mm = np.zeros((4, 4))         
     
     Yindex = 0
     Yend   = 4
     Xindex = 0
     Xend   = 4    
     
-    if y0 == 0 and x0 == 0:
+    if y0 <= 0 and x0 <= 0:
         Xindex = 1
         Yindex = 1
-    elif y0 == 0:
+        y0=0
+        x0=0
+    elif y0 <= 0:
         Yindex = 1
-    elif x0 == 0:
+        y0=0
+    elif x0 <= 0:
         Xindex = 1
+        x0=0
         
     if y0 == height and x0 == width:
-        Xend = 1
-        Yend = 1
+        Xend = 2
+        Yend = 2
     elif y0 == height-1 and x0 == width-1:
-        Xend = 2
-        Yend = 2
-    if y0 == height:
-        Yend = 1
-    elif y0 == height-1:
-        Yend = 2
-    if x0 == width:
-        Xend = 1
-    elif x0 == width-1:
-        Xend = 2
-    
-    
+        Xend = 3
+        Yend = 3        
+    else:
+        if y0 == height:
+            Yend = 2
+        elif y0 == height-1:
+            Yend = 3            
+        if x0 == width:
+            Xend = 2
+        elif x0 == width-1:
+            Xend = 3    
+
     for i in range(Yindex, Yend):
         for j in range(Xindex, Xend):
-            mm[i][j] = 1
-            
+            mm[i][j] = 1            
             
     for i in range(4):
         for j in range(4):
             if mm[i][j] == 1:
                 mm[i][j] = img[y0-1+i][x0-1+j]
                 
-    y0 = Cubic(mm[0][0],mm[0][1],mm[0][2],mm[0][3],alpha)
-    y1 = Cubic(mm[1][0],mm[1][1],mm[1][2],mm[1][3],alpha)
-    y2 = Cubic(mm[2][0],mm[2][1],mm[2][2],mm[2][3],alpha)
-    y3 = Cubic(mm[3][0],mm[3][1],mm[3][2],mm[3][3],alpha)
-    
-    ans = Cubic(y0,y1,y2,y3,beta)
+    y0  = Cubic(mm[0][0], mm[0][1], mm[0][2], mm[0][3], alpha)
+    y1  = Cubic(mm[1][0], mm[1][1], mm[1][2], mm[1][3], alpha)
+    y2  = Cubic(mm[2][0], mm[2][1], mm[2][2], mm[2][3], alpha)
+    y3  = Cubic(mm[3][0], mm[3][1], mm[3][2], mm[3][3], alpha)    
+    ans = Cubic(y0, y1, y2, y3, beta)
         
     return ans
 
@@ -101,14 +103,7 @@ def blinear (img, ii, jj):
     rows = img.shape[0]-1
     cols = img.shape[1]-1
         
-    if   top_i < rows and left_j < cols :    
-#        if top_i == 0 and left_j == 0:
-#            alpha = 0
-#            beta  = 0
-#        elif top_i == 0:
-#            beta = 0
-#        elif left_j == 0:
-#            alpha = 0            
+    if   top_i < rows and left_j < cols :             
         a = (top_i   ,left_j  )
         b = (top_i   ,left_j+1)
         c = (top_i+1 ,left_j  )
