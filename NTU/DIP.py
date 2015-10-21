@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 
-
 def BiCubic(img,y,x):
     width  = img.shape[1]-1
     height = img.shape[0]-1

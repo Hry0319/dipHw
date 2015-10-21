@@ -10,9 +10,6 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 import NTU.DIP as dip
-from pylab import *
-import random
-import math
 
 ScaleRate     = 0.5
 theta         = 30.0
@@ -20,7 +17,6 @@ theta         = 30.0
 img = cv2.imread('lena.png',cv2.IMREAD_ANYCOLOR)
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY);
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB);
-
 
 imgRow     = img.shape[0]
 imgColumn  = img.shape[1]
@@ -38,9 +34,6 @@ for i in range(maxScaleRow):
 plt.subplot(221)   
 plt.imshow(scaleImg, cmap = 'gray')
 plt.title('scaleImg')
-#cv2.imwrite("blinearScale.png", scaleImg);
-#img = cv2.resize(img, (maxScaleCol, maxScaleRow))  #default bilinear interpolation
-#cv2.imwrite("cv2.png", img)
 
 #=========================================================================================#
 #=========================================================================================#
@@ -64,10 +57,7 @@ for y in range(height):
         orgPoint[1] += float(imgRow/2)
         if ((orgPoint[0] >= 0) and (orgPoint[0] < imgColumn)) and ((orgPoint[1] >= 0) and (orgPoint[1] < imgRow)):   
             RotateImg[y][x] = dip.BiCubic(img ,orgPoint[1],orgPoint[0])
-            
-            
-
-
+ 
 cv2.imwrite("biCubic.png", RotateImg);
 plt.subplot(222)   
 plt.imshow(RotateImg, cmap = 'gray')
