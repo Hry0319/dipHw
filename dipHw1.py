@@ -63,9 +63,7 @@ for y in range(height):
         orgPoint[0] += float(imgColumn/2)
         orgPoint[1] += float(imgRow/2)
         if ((orgPoint[0] >= 0) and (orgPoint[0] < imgColumn)) and ((orgPoint[1] >= 0) and (orgPoint[1] < imgRow)):   
-#            print orgPoint  , imgRow , imgColumn
-            RotateImg[y][x] = dip.blinear(img ,orgPoint[1],orgPoint[0])
-#            RotateImg[y][x] =img[orgPoint[1]][orgPoint[0]]
+            RotateImg[y][x] = dip.BiCubic(img ,orgPoint[1],orgPoint[0])
         
         
         

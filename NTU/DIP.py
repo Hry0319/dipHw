@@ -3,7 +3,6 @@ def BiCubic(img,y,x):
     
     return
 
-<<<<<<< HEAD
 def Cubic(p0,p1,p2,p3,x):
     ff1 = (p3-p1)/2
     f1  = p2
@@ -15,13 +14,13 @@ def Cubic(p0,p1,p2,p3,x):
     b = f1-a-c-d
         
     return a*x**3 + b*x**2 + c*x + d
-=======
+    
+    
 def rotateImage(image, angle):
     image_center = tuple(np.array(image.shape)/2)
     rot_mat = cv2.getRotationMatrix2D(image_center,angle,1.0)
     result = cv2.warpAffine(image, rot_mat, image.shape,flags=cv2.INTER_CUBIC)
     return result
->>>>>>> 7b6003f85d784ec9e686938da6bbf42aafce9051
 
 def blinear (img, ii, jj):    
     """
