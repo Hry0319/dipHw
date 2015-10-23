@@ -74,12 +74,6 @@ def Cubic(p0,p1,p2,p3,x):
         
     return a*x**3 + b*x**2 + c*x + d
     
-    
-def rotateImage(image, angle):
-    image_center = tuple(np.array(image.shape)/2)
-    rot_mat = cv2.getRotationMatrix2D(image_center,angle,1.0)
-    result = cv2.warpAffine(image, rot_mat, image.shape,flags=cv2.INTER_CUBIC)
-    return result
 
 def blinear (img, ii, jj):    
     """
@@ -133,3 +127,12 @@ def blinear (img, ii, jj):
              (alpha)   * (beta)   * img[d[0]][d[1]]
                    
     return weight
+
+
+
+    
+def rotateImage(image, angle):
+    image_center = tuple(np.array(image.shape)/2)
+    rot_mat = cv2.getRotationMatrix2D(image_center,angle,1.0)
+    result = cv2.warpAffine(image, rot_mat, image.shape,flags=cv2.INTER_CUBIC)
+    return result

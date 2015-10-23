@@ -28,12 +28,12 @@ for i in range(maxScaleRow):
     for j in range(maxScaleCol):        
         ii = (i/ScaleRate)-0.5
         jj = (j/ScaleRate)-0.5
-        scaleImg[i][j] += dip.blinear(img,ii,jj)
-#        scaleImg[i][j] += dip.BiCubic(img,ii,jj)
+#        scaleImg[i][j] += dip.blinear(img,ii,jj)
+        scaleImg[i][j] += dip.BiCubic(img,ii,jj)
 #        print `ii`,`jj`
         
         
-cv2.imwrite("scaleImg.png", scaleImg);
+cv2.imwrite("scaleImg_.png", scaleImg);
      
 plt.subplot(221)   
 plt.imshow(scaleImg, cmap = 'gray')
@@ -65,8 +65,8 @@ for y in range(height):
         orgPoint[0] += float(imgColumn/2)
         orgPoint[1] += float(imgRow/2)
         if ((orgPoint[0] >= 0) and (orgPoint[0] < imgColumn)) and ((orgPoint[1] >= 0) and (orgPoint[1] < imgRow)):   
-            RotateImg[y][x] = dip.BiCubic(img2 ,orgPoint[1],orgPoint[0])
 #            RotateImg[y][x] = dip.blinear(img ,orgPoint[1],orgPoint[0])
+            RotateImg[y][x] = dip.BiCubic(img2 ,orgPoint[1],orgPoint[0])
  
 cv2.imwrite("RotateImg.png", RotateImg);
 plt.subplot(222)   
